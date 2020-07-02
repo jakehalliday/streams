@@ -17,7 +17,7 @@ export const signOut = () => {
 
 export const createStream = formValues => async (dispatch, getState) => {
     const {userId} = getState().auth;
-    const res = await streams.post('/streams', {...formValues, userId});
+    const res = await streams.post('/streams', {...formValues, userId, key: Math.floor(9999999999*Math.random())});
     dispatch({type:CREATE_STREAM, payload:res.data});
     history.push('/');
 };
@@ -34,7 +34,7 @@ export const getStreams = () => async dispatch => {
 
 export const updateStream = (formValues, id) => async (dispatch,getState) => {
     const {userId} = getState().auth;
-    const res = streams.patch(`streams/${id}`, {...formValues, userId});
+    const res = await streams.put(`streams/${id}`, {...formValues, userId});
     dispatch({type:UPDATE_STREAM, payload: res.data});
     history.push('/')
 };
